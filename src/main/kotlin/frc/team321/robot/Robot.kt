@@ -2,6 +2,7 @@ package frc.team321.robot
 
 import edu.wpi.first.wpilibj.IterativeRobot
 import edu.wpi.first.wpilibj.Notifier
+import edu.wpi.first.wpilibj.command.Scheduler
 import frc.team321.robot.subsystems.drivetrain.Drivetrain
 import frc.team321.robot.subsystems.drivetrain.GearShifter
 import frc.team321.robot.subsystems.manipulator.Intake
@@ -39,13 +40,17 @@ class Robot : IterativeRobot() {
         }.startPeriodic(0.01)
     }
 
-    override fun disabledInit() {}
+    override fun autonomousInit() {
+        Drivetrain.setRamping(false)
+    }
 
-    override fun autonomousInit() {}
+    override fun teleopInit() {
+        Drivetrain.setRamping(true)
+    }
 
-    override fun teleopInit() {}
-
-    override fun robotPeriodic() {}
+    override fun robotPeriodic() {
+        Scheduler.getInstance().run()
+    }
 
     override fun disabledPeriodic() {}
 

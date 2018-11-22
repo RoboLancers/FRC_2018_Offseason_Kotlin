@@ -63,14 +63,10 @@ object LinearSlide : Subsystem() {
     }
 
     fun setRamping(ramping: Boolean) {
-        if (ramping) {
-            for (talon in talons) {
-                talon.configOpenloopRamp(Constants.LinearSlide.RAMP_RATE, Constants.TIMEOUT)
-            }
-        } else {
-            for (talon in talons) {
-                talon.configOpenloopRamp(0.0, Constants.TIMEOUT)
-            }
+        val rampRate = if (ramping) Constants.LinearSlide.RAMP_RATE else 0.0
+
+        for (talon in talons) {
+            talon.configOpenloopRamp(rampRate, Constants.TIMEOUT)
         }
     }
 

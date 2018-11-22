@@ -2,6 +2,7 @@ package frc.team321.robot.utilities
 
 import frc.team321.robot.Constants
 
+@Suppress("unused")
 class RobotUtil{
     companion object {
         fun applyDeadband(value: Double, deadband: Double = Constants.JOYSTICK_DEADBAND) = if (value in -deadband..deadband) {

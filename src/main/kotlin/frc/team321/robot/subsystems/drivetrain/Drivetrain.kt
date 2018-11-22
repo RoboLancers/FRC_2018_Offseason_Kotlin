@@ -16,6 +16,11 @@ object Drivetrain : Subsystem() {
         rightTransmission.set(controlMode, rightValue)
     }
 
+    fun setRamping(ramping: Boolean){
+        leftTransmission.setRamping(ramping)
+        rightTransmission.setRamping(ramping)
+    }
+
     fun reset(){
         leftTransmission.reset()
         rightTransmission.reset()

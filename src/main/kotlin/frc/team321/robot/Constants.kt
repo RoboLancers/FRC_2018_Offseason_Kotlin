@@ -27,6 +27,8 @@ object Constants {
         const val TICKS_PER_REVOLUTION = 1024
 
         const val WHEEL_DIAMETER = 0.51 //Feet
+
+        const val RAMP_RATE = 0.25
     }
 
     object Intake {

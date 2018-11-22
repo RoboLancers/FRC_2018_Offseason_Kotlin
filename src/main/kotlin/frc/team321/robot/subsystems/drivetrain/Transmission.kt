@@ -81,7 +81,9 @@ class Transmission(drivetrainSide: DrivetrainSide, vararg ports: Int) {
         resetEncoder()
     }
 
-    fun setRampRate(rampRate: Double) {
+    fun setRamping(ramping: Boolean) {
+        val rampRate = if(ramping) Constants.Drivetrain.RAMP_RATE else 0.0
+
         for (motor in talons) {
             motor.configOpenloopRamp(rampRate, Constants.TIMEOUT)
         }

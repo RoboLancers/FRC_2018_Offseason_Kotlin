@@ -1,5 +1,6 @@
 package frc.team321.robot.utilities.motion
 
+import frc.team321.robot.subsystems.drivetrain.Drivetrain
 import jaci.pathfinder.Trajectory
 
 @Suppress("unused")
@@ -34,6 +35,10 @@ object Odometry{
     @set:Synchronized
     @get:Synchronized
     var deltaPosition: Double = 0.0
+
+    init {
+        lastPosition = (Drivetrain.leftTransmission.encoderCount + Drivetrain.rightTransmission.encoderCount) / 2.0
+    }
 
     @Synchronized
     fun setInitialOdometry(trajectory: Trajectory) {
