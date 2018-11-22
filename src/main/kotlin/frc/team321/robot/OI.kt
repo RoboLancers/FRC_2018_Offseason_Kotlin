@@ -25,4 +25,8 @@ object OI {
         flightController.trigger.whenPressed(UseIntake(IntakePower.OUTTAKE_SLOW))
         flightController.trigger.whenReleased(UseIntake(IntakePower.STOP))
     }
+
+    fun updateDashboardValues(){
+
+    }
 }

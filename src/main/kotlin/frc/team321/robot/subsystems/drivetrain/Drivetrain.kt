@@ -1,6 +1,7 @@
 package frc.team321.robot.subsystems.drivetrain
 
 import com.ctre.phoenix.motorcontrol.ControlMode
+import com.ctre.phoenix.motorcontrol.NeutralMode
 import edu.wpi.first.wpilibj.command.Subsystem
 import frc.team321.robot.RobotMap
 import frc.team321.robot.commands.subsystems.drivetrain.UseDrive
@@ -19,6 +20,11 @@ object Drivetrain : Subsystem() {
     fun setRamping(ramping: Boolean){
         leftTransmission.setRamping(ramping)
         rightTransmission.setRamping(ramping)
+    }
+
+    fun setNeutralMode(neutralMode: NeutralMode){
+        leftTransmission.setNeutralMode(neutralMode)
+        rightTransmission.setNeutralMode(neutralMode)
     }
 
     fun reset(){

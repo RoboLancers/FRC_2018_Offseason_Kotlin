@@ -1,5 +1,6 @@
 package frc.team321.robot
 
+import com.ctre.phoenix.motorcontrol.NeutralMode
 import edu.wpi.first.wpilibj.IterativeRobot
 import edu.wpi.first.wpilibj.Notifier
 import edu.wpi.first.wpilibj.command.Scheduler
@@ -12,6 +13,8 @@ import frc.team321.robot.subsystems.misc.Camera
 import frc.team321.robot.subsystems.misc.Pneumatic
 import frc.team321.robot.subsystems.misc.Sensors
 import frc.team321.robot.utilities.RobotUtil
+import frc.team321.robot.utilities.enums.GearShifterGear
+import frc.team321.robot.utilities.enums.IntakePivotState
 import frc.team321.robot.utilities.motion.Odometry
 
 class Robot : IterativeRobot() {
@@ -28,6 +31,9 @@ class Robot : IterativeRobot() {
 
         OI
 
+        GearShifter.set(GearShifterGear.HIGH)
+        Drivetrain.setNeutralMode(NeutralMode.Brake)
+
         Notifier {
             Odometry.currentEncoderPosition = (Drivetrain.leftTransmission.encoderCount + Drivetrain.rightTransmission.encoderCount) / 2.0
             Odometry.deltaPosition = RobotUtil.encoderTickToFeet(Odometry.currentEncoderPosition - Odometry.lastPosition)
@@ -42,19 +48,21 @@ class Robot : IterativeRobot() {
 
     override fun autonomousInit() {
         Drivetrain.setRamping(false)
+        Sensors.navX.reset()
+        IntakePivot.set(IntakePivotState.UP)
     }
 
     override fun teleopInit() {
         Drivetrain.setRamping(true)
+        IntakePivot.set(IntakePivotState.DOWN)
+    }
+
+    override fun testInit() {
+        IntakePivot.set(IntakePivotState.UP)
     }
 
     override fun robotPeriodic() {
+        OI.updateDashboardValues()
         Scheduler.getInstance().run()
     }
-
-    override fun disabledPeriodic() {}
-
-    override fun autonomousPeriodic() {}
-
-    override fun teleopPeriodic() {}
 }
