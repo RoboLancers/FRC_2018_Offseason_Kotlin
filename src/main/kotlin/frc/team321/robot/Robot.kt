@@ -2,8 +2,8 @@ package frc.team321.robot
 
 import com.ctre.phoenix.motorcontrol.NeutralMode
 import edu.wpi.first.wpilibj.IterativeRobot
-import edu.wpi.first.wpilibj.Notifier
 import edu.wpi.first.wpilibj.command.Scheduler
+import frc.team321.robot.auto.Autonomous
 import frc.team321.robot.subsystems.drivetrain.Drivetrain
 import frc.team321.robot.subsystems.drivetrain.GearShifter
 import frc.team321.robot.subsystems.manipulator.Intake
@@ -12,10 +12,9 @@ import frc.team321.robot.subsystems.manipulator.LinearSlide
 import frc.team321.robot.subsystems.misc.Camera
 import frc.team321.robot.subsystems.misc.Pneumatic
 import frc.team321.robot.subsystems.misc.Sensors
-import frc.team321.robot.utilities.RobotUtil
 import frc.team321.robot.utilities.enums.GearShifterGear
 import frc.team321.robot.utilities.enums.IntakePivotState
-import frc.team321.robot.utilities.motion.Odometry
+import frc.team321.robot.utilities.motion.Localization
 
 class Robot : IterativeRobot() {
     override fun robotInit() {
@@ -30,26 +29,19 @@ class Robot : IterativeRobot() {
         Camera.start()
 
         OI
+        Localization
+        Autonomous
 
         GearShifter.set(GearShifterGear.HIGH)
         Drivetrain.setNeutralMode(NeutralMode.Brake)
-
-        Notifier {
-            Odometry.currentEncoderPosition = (Drivetrain.leftTransmission.encoderCount + Drivetrain.rightTransmission.encoderCount) / 2.0
-            Odometry.deltaPosition = RobotUtil.encoderTickToFeet(Odometry.currentEncoderPosition - Odometry.lastPosition)
-            Odometry.theta = Math.toRadians(Sensors.angle)
-
-            Odometry.x += Math.cos(Odometry.theta) * Odometry.deltaPosition
-            Odometry.y += Math.sin(Odometry.theta) * Odometry.deltaPosition
-
-            Odometry.lastPosition = Odometry.currentEncoderPosition
-        }.startPeriodic(0.01)
     }
 
     override fun autonomousInit() {
         Drivetrain.setRamping(false)
         Sensors.navX.reset()
         IntakePivot.set(IntakePivotState.UP)
+
+        Autonomous.routine.start()
     }
 
     override fun teleopInit() {
@@ -62,7 +54,7 @@ class Robot : IterativeRobot() {
     }
 
     override fun robotPeriodic() {
-        OI.updateDashboardValues()
+        NetworkInterface.updateDashboardValues()
         Scheduler.getInstance().run()
     }
 }

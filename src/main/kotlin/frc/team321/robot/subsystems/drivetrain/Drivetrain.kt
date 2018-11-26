@@ -12,9 +12,13 @@ object Drivetrain : Subsystem() {
     val leftTransmission = Transmission(DrivetrainSide.LEFT, RobotMap.Drivetrain.LEFT_MASTER, RobotMap.Drivetrain.LEFT_SLAVE1, RobotMap.Drivetrain.LEFT_SLAVE2)
     val rightTransmission = Transmission(DrivetrainSide.RIGHT, RobotMap.Drivetrain.RIGHT_MASTER, RobotMap.Drivetrain.RIGHT_SLAVE1, RobotMap.Drivetrain.RIGHT_SLAVE2)
 
-    fun set(controlMode: ControlMode, leftValue: Double, rightValue: Double){
-        leftTransmission.set(controlMode, leftValue)
-        rightTransmission.set(controlMode, rightValue)
+    fun set(controlMode: ControlMode, leftValue: Double, rightValue: Double, leftDemand: Double = 0.0, rightDemand: Double = 0.0){
+        leftTransmission.set(controlMode, leftValue, leftDemand)
+        rightTransmission.set(controlMode, rightValue, rightDemand)
+    }
+
+    fun stop(){
+        set(ControlMode.PercentOutput, 0.0, 0.0)
     }
 
     fun setRamping(ramping: Boolean){

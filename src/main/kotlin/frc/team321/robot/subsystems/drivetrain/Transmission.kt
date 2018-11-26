@@ -1,13 +1,15 @@
 package frc.team321.robot.subsystems.drivetrain
 
-import com.ctre.phoenix.motorcontrol.ControlMode
-import com.ctre.phoenix.motorcontrol.FeedbackDevice
-import com.ctre.phoenix.motorcontrol.NeutralMode
-import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced
+import com.ctre.phoenix.motorcontrol.*
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX
 import frc.team321.robot.Constants
 import frc.team321.robot.utilities.enums.DrivetrainSide
+import org.ghrobotics.lib.mathematics.units.derivedunits.LinearVelocity
+import org.ghrobotics.lib.mathematics.units.derivedunits.velocity
+import org.ghrobotics.lib.mathematics.units.feet
+import org.ghrobotics.lib.mathematics.units.nativeunits.NativeUnit
+import org.ghrobotics.lib.mathematics.units.nativeunits.STU
 
 @Suppress("unused", "MemberVisibilityCanBePrivate")
 class Transmission(drivetrainSide: DrivetrainSide, vararg ports: Int) {
@@ -22,6 +24,12 @@ class Transmission(drivetrainSide: DrivetrainSide, vararg ports: Int) {
 
     val encoderVelocity: Int
         get() = master.getSelectedSensorVelocity(Constants.Drivetrain.PID_SLOT_INDEX)
+
+    val position: NativeUnit
+        get() = encoderCount.STU
+
+    val velocity: LinearVelocity
+        get() = encoderVelocity.feet.velocity
 
     init {
         slave1.follow(master)
@@ -64,8 +72,8 @@ class Transmission(drivetrainSide: DrivetrainSide, vararg ports: Int) {
         }
     }
 
-    fun set(mode: ControlMode, value: Double) {
-        master.set(mode, value)
+    fun set(mode: ControlMode, value: Double, demand: Double = 0.0) {
+        master.set(mode, value, DemandType.ArbitraryFeedForward, demand)
     }
 
     fun stop(){

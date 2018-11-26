@@ -20,6 +20,7 @@ deploy {
     }
     artifacts {
         artifact('frcJava', FRCJavaArtifact) {
+            //noinspection GroovyAssignabilityCheck
             targets << "roborio"
         }
     }
@@ -27,6 +28,8 @@ deploy {
 
 repositories {
     mavenCentral()
+
+    maven { url 'https://jitpack.io' }
 }
 
 // Defining my dependencies. In this case, WPILib (+ friends), CTRE Phoenix (Talon SRX)
@@ -41,6 +44,8 @@ dependencies {
 
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     compile group: 'net.jafama', name: 'jafama', version: '2.3.1'
+
+    compile 'com.github.5190GreenHopeRobotics:FalconLibrary:-SNAPSHOT'
 }
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
