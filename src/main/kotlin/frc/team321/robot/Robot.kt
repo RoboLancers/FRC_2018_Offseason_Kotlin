@@ -1,7 +1,7 @@
 package frc.team321.robot
 
 import com.ctre.phoenix.motorcontrol.NeutralMode
-import edu.wpi.first.wpilibj.IterativeRobot
+import edu.wpi.first.wpilibj.TimedRobot
 import edu.wpi.first.wpilibj.command.Scheduler
 import frc.team321.robot.auto.Autonomous
 import frc.team321.robot.subsystems.drivetrain.Drivetrain
@@ -16,7 +16,7 @@ import frc.team321.robot.utilities.enums.GearShifterGear
 import frc.team321.robot.utilities.enums.IntakePivotState
 import frc.team321.robot.utilities.motion.Localization
 
-class Robot : IterativeRobot() {
+class Robot : TimedRobot() {
     override fun robotInit() {
         Drivetrain
         GearShifter

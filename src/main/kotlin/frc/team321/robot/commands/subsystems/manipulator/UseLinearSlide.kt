@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode
 import edu.wpi.first.wpilibj.command.Command
 import frc.team321.robot.OI
 import frc.team321.robot.subsystems.manipulator.LinearSlide
-import net.jafama.FastMath
 
 class UseLinearSlide: Command(){
     init {
@@ -16,8 +15,8 @@ class UseLinearSlide: Command(){
         val encoderPosition = LinearSlide.encoderPosition
 
         val output = when {
-            joystickValue > 0 -> -FastMath.tanh((encoderPosition - 100000)/5000.0)
-            joystickValue < 0 -> FastMath.tanh(encoderPosition/5000.0)
+            joystickValue > 0 -> -Math.tanh((encoderPosition - 100000)/5000.0)
+            joystickValue < 0 -> Math.tanh(encoderPosition/5000.0)
             else -> 0.0
         }
 

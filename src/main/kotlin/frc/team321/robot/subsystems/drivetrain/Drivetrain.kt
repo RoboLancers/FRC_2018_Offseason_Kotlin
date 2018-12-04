@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode
 import edu.wpi.first.wpilibj.command.Subsystem
 import frc.team321.robot.RobotMap
 import frc.team321.robot.commands.subsystems.drivetrain.UseDrive
+import frc.team321.robot.utilities.enums.DriveMode
 import frc.team321.robot.utilities.enums.DrivetrainSide
 
 @Suppress("unused")
@@ -37,6 +38,6 @@ object Drivetrain : Subsystem() {
     }
 
     override fun initDefaultCommand() {
-        defaultCommand = UseDrive()
+        defaultCommand = UseDrive(DriveMode.ARCADE)
     }
 }
