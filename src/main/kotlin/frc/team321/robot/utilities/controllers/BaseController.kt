@@ -7,7 +7,5 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton
 
 abstract class BaseController(port: Int): GenericHID(port) {
     val joystick: Joystick = Joystick(port)
-    val buttons: List<JoystickButton> by lazy {
-        buttons.indices.map { JoystickButton(joystick, it) }
-    }
+    var buttons: Array<JoystickButton> = Array(13) { i -> JoystickButton(joystick, i)}
 }
